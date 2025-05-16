@@ -197,6 +197,7 @@ async def process_mp3(callback: CallbackQuery):
 
     except Exception as e:
         await callback.message.answer(get_text(lang, "incorect_link"))
+        await callback.message.answer(f"{e}")
         print(f'{e}')
 
     finally:

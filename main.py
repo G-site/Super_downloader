@@ -1,5 +1,4 @@
 import asyncio
-from dotenv import load_dotenv
 import os
 import logging
 from aiogram import Bot, Dispatcher
@@ -8,11 +7,6 @@ from app.database import data_create, admin_create, base
 from app.handlers import router
 from app.download import downloader
 from app.admin import admin
-
-load_dotenv()
-TOKEN = os.getenv("TOKEN")
-
-users = base()
 
 
 async def set_bot_commands(bot: Bot):
@@ -26,24 +20,34 @@ async def set_bot_commands(bot: Bot):
 
 
 async def set_bot_description(bot: Bot):
-    await bot.set_my_short_description("🤖Скачивай видео из YouTube  и других соцсетей — быстро, бесплатно и без водяных знаков!\n\nСвязаться: @orlovurasuper")
-    await bot.set_my_description("🤖Скачивай видео из YouTube  и других соцсетей — быстро, бесплатно и без водяных знаков!\n\nСвязаться: @orlovurasuper")
+    await bot.set_my_short_description(
+        "🤖Скачивай видео из YouTube и других соцсетей — быстро, бесплатно и без водяных знаков!\n\nСвязаться: @orlovurasuper"
+    )
+    await bot.set_my_description(
+        "🤖Скачивай видео из YouTube и других соцсетей — быстро, бесплатно и без водяных знаков!\n\nСвязаться: @orlovurasuper"
+    )
 
 
-bot = Bot(token=TOKEN)
-dp = Dispatcher()
-
-
+users = base()
 data_create()
 admin_create()
 
 
 async def main():
+    TOKEN = os.getenv("TOKEN")
+    if not TOKEN:
+        raise RuntimeError("Переменная окружения TOKEN не найдена! Задайте её в Railway Variables.")
+
+    bot = Bot(token=TOKEN)
+    dp = Dispatcher()
+
     await set_bot_commands(bot)
     await set_bot_description(bot)
+
     dp.include_router(router)
     dp.include_router(downloader)
     dp.include_router(admin)
+
     await dp.start_polling(bot)
 
 

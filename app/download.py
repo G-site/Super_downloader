@@ -12,7 +12,7 @@ import yt_dlp
 bot = Bot(token="7831492399:AAH1UyTVbh1LgemkquZ5viq4JYd_9Jb0Ul4")
 from app.database import download_user
 from app.language import get_text
-from main import bot
+
 
 downloader = Router()
 user_video_data = {}

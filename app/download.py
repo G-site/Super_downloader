@@ -7,7 +7,6 @@ from app.database import download_user
 from app.language import get_text
 import sqlite3
 downloader = Router()
-from main import bot
 
 
 import yt_dlp
@@ -188,7 +187,7 @@ async def process_mp3(callback: CallbackQuery):
 
         audio = FSInputFile(filepath)
         await msg.edit_text(get_text(lang, "send"))
-        await bot.send_audio(chat_id=chat_id, audio=audio, caption="<b>Незабывай делиться ботом з другом! - <a href='https://t.me/ytdownlad_bot'>поделиться!</a></b>", parse_mode="HTML")
+        await message.bot.send_audio(chat_id=chat_id, audio=audio, caption="<b>Незабывай делиться ботом з другом! - <a href='https://t.me/ytdownlad_bot'>поделиться!</a></b>", parse_mode="HTML")
         download_user(tg_id)
         await msg.delete()
 
@@ -244,7 +243,7 @@ async def process_quality(callback: CallbackQuery):
         await download_video(url, ydl_opts)
         video = FSInputFile(filepath)
         await msg.edit_text(get_text(lang, "send"))
-        await bot.send_video(chat_id=chat_id, video=video)
+        await message.bot.send_video(chat_id=chat_id, video=video)
         download_user(tg_id)
         await msg.delete()      
 

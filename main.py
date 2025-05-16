@@ -33,7 +33,7 @@ admin_create()
 
 async def main():
 
-   
+    bot = Bot(token="7831492399:AAH1UyTVbh1LgemkquZ5viq4JYd_9Jb0Ul4")
     dp = Dispatcher()
 
     await set_bot_commands(bot)

@@ -2,7 +2,9 @@ from aiogram import Router
 from aiogram.types import Message, CallbackQuery, FSInputFile
 import asyncio
 
-from main import bot
+# download.py
+from bot_instance import bot  # а не з main.py
+
 from app.database import download_user
 from app.language import get_text
 import sqlite3

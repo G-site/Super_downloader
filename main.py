@@ -1,9 +1,7 @@
 import asyncio
-import os
-import logging
 from aiogram import Bot, Dispatcher
 from aiogram.types import BotCommand, BotCommandScopeDefault
-from app.database import data_create, admin_create, base
+from app.database import data_create, admin_create
 from app.handlers import router
 from app.download import downloader
 from app.admin import admin
@@ -28,17 +26,14 @@ async def set_bot_description(bot: Bot):
     )
 
 
-users = base()
+
 data_create()
 admin_create()
 
 
 async def main():
-    TOKEN = os.getenv("TOKEN")
-    if not TOKEN:
-        raise RuntimeError("Переменная окружения TOKEN не найдена! Задайте её в Railway Variables.")
 
-    bot = Bot(token=TOKEN)
+    bot = Bot(token="123456789:ABCdefGHIjklMNOpqrSTUvwxYZ")
     dp = Dispatcher()
 
     await set_bot_commands(bot)
@@ -52,7 +47,6 @@ async def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
     try:
         asyncio.run(main())
     except KeyboardInterrupt:

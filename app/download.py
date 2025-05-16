@@ -46,6 +46,7 @@ async def handle_url(message: Message):
     msg = await message.answer(get_text(lang, "search"))
     print("URL:", url)
     ydl_opts = {
+        'cookiefile': 'cookies.txt',
         'quiet': True,
         'noplaylist': True,
         'nocheckcertificate': True,
@@ -161,6 +162,7 @@ async def process_mp3(callback: CallbackQuery):
     msg = await callback.message.answer(get_text(lang, "download"))
 
     ydl_opts = {
+        'cookiefile': 'cookies.txt',
         'outtmpl': filepath_template,
         'format': 'bestaudio/best',
         'quiet': True,
@@ -227,6 +229,7 @@ async def process_quality(callback: CallbackQuery):
     msg = await callback.message.answer(get_text(lang, "download"))
 
     ydl_opts = {
+        'cookiefile': 'cookies.txt',
         'outtmpl': filepath,
         'format': format_id,
         'merge_output_format': 'mp4',

@@ -5,7 +5,7 @@ from app.database import data_create, admin_create
 from app.handlers import router
 from app.download import downloader
 from app.admin import admin
-
+from bot_instance import bot
 
 async def set_bot_commands(bot: Bot):
     commands = [
@@ -33,7 +33,7 @@ admin_create()
 
 async def main():
 
-    bot = Bot(token="7831492399:AAH1UyTVbh1LgemkquZ5viq4JYd_9Jb0Ul4")
+   
     dp = Dispatcher()
 
     await set_bot_commands(bot)

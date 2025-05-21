@@ -8,8 +8,7 @@ from app.language import get_text
 import sqlite3
 downloader = Router()
 
-
-
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
 
 import yt_dlp
 import os
@@ -52,6 +51,8 @@ async def handle_url(message: Message):
         'ignoreerrors': True,
         'extract_flat': False,
         'socket_timeout': 10,
+        'cookiefile': 'cookies.txt',
+        'user_agent': USER_AGENT,
     }
 
     try:
@@ -160,6 +161,8 @@ async def process_mp3(callback: CallbackQuery):
         'outtmpl': filepath_template,
         'format': 'bestaudio/best',
         'quiet': True,
+        'cookiefile': 'cookies.txt',
+        'user_agent': USER_AGENT,
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -183,7 +186,7 @@ async def process_mp3(callback: CallbackQuery):
 
         audio = FSInputFile(filepath)
         await msg.edit_text(get_text(lang, "send"))
-        await callback.message.answer_audio(chat_id=chat_id, audio=audio, caption="<b>Незабывай делиться ботом з другом! - <a href='https://t.me/ytdownlad_bot'>поделиться!</a></b>", parse_mode="HTML")
+        await callback.message.answer_audio(audio=audio, caption="<b>Незабывай делиться ботом з другом! - <a href='https://t.me/ytdownlad_bot'>поделиться!</a></b>", parse_mode="HTML")
         download_user(tg_id)
         await msg.delete()
 
@@ -225,6 +228,8 @@ async def process_quality(callback: CallbackQuery):
         'format': f"best[format_id={format_id}]",
         'merge_output_format': 'mp4',
         'quiet': True,
+        'cookiefile': 'cookies.txt',
+        'user_agent': USER_AGENT,
     }
 
     try:
@@ -242,7 +247,7 @@ async def process_quality(callback: CallbackQuery):
 
         video = FSInputFile(filepath)
         await msg.edit_text(get_text(lang, "send"))
-        await callback.message.answer_video(chat_id=chat_id, video=video)
+        await callback.message.answer_video(video=video)
         download_user(tg_id)
         await asyncio.sleep(1)
         await msg.delete()
